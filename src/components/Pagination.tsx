@@ -4,8 +4,14 @@ interface PaginationProps {
   onPageChange: (page: number) => void
 }
 
+const activePageClass = 'bg-blue-500 text-white shadow-sm'
+const inactivePageClass = 'text-slate-600 hover:bg-slate-100'
+
 export const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
   if (totalPages <= 1) return null
+
+  const isFirstPage = page <= 1
+  const isLastPage = page >= totalPages
 
   const getPageNumbers = (): (number | '...')[] => {
     const pages: (number | '...')[] = []
@@ -32,7 +38,7 @@ export const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) 
     <div className="flex items-center justify-center gap-1.5">
       <button
         onClick={() => onPageChange(page - 1)}
-        disabled={page <= 1}
+        disabled={isFirstPage}
         className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
       >
         Prev
@@ -47,10 +53,8 @@ export const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) 
           <button
             key={p}
             onClick={() => onPageChange(p)}
-            className={`min-w-[36px] rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              p === page
-                ? 'bg-blue-500 text-white shadow-sm'
-                : 'text-slate-600 hover:bg-slate-100'
+            className={`min-w-9 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              p === page ? activePageClass : inactivePageClass
             }`}
           >
             {p}
@@ -60,7 +64,7 @@ export const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) 
 
       <button
         onClick={() => onPageChange(page + 1)}
-        disabled={page >= totalPages}
+        disabled={isLastPage}
         className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
       >
         Next

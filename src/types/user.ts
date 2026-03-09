@@ -1,3 +1,14 @@
+export interface UserCompany {
+  name: string
+  department: string
+  title: string
+}
+
+export interface UserAddress {
+  city: string
+  state: string
+}
+
 export interface User {
   id: number
   firstName: string
@@ -8,15 +19,8 @@ export interface User {
   email: string
   phone: string
   image: string
-  company: {
-    name: string
-    department: string
-    title: string
-  }
-  address: {
-    city: string
-    state: string
-  }
+  company: UserCompany
+  address: UserAddress
 }
 
 export interface UsersResponse {
